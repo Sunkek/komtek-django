@@ -16,3 +16,14 @@ class ElementsViewset(viewsets.ModelViewSet):
     """Show all or specific version catalog elements"""
     queryset = Element.objects.all().order_by('-date_created')
     serializer_class = ElementSerializer
+
+
+"""Defining the allowed request methods for each ModelViewSet"""
+catalogs = CatalogsViewset.as_view({
+    "get": "list",
+    "post": "create",
+})
+elements = ElementsViewset.as_view({
+    "get": "list",
+    "post": "create",
+})

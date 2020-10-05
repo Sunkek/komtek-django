@@ -1,7 +1,7 @@
 from django.urls import include, path
-from .views import CatalogsViewset, ElementsViewset
+from .views import catalogs, elements
 
 urlpatterns = [
-    path("catalogs/", CatalogsViewset.as_view({'get': 'list'}), name="catalogs"),
-    path("elements/", ElementsViewset.as_view({'get': 'list'}), name="elements"),
+    path("catalogs/", catalogs, name="catalogs"),
+    path("elements/", elements, name="elements"),
 ]
