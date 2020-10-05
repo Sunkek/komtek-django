@@ -7,6 +7,7 @@ class Catalog(models.Model):
     description = models.CharField(max_length=1000)
     version = models.CharField(max_length=10, blank=False, null=False)
     date_created = models.DateField(auto_now_add=True)
+    date_released = models.DateField(blank=True, null=True)
     date_expired = models.DateField(blank=True, null=True)
     
     # Catalogs should have unique versions
