@@ -1,12 +1,13 @@
 from django.urls import include, path
-from .views import catalogs, catalogs_actual, elements, elements_by_catalog
+import komtek.api.views as v
 
 urlpatterns = [
-    path("catalogs/actual/<str:date>/", catalogs_actual, name="catalogs_actual"),
-    path("catalogs/actual/", catalogs_actual, name="catalogs_actual"),
+    path("catalogs/actual/<str:date>/", v.catalogs_actual, name="catalogs_actual"),
+    path("catalogs/actual/", v.catalogs_actual, name="catalogs_actual"),
 
-    path("elements/from/", elements_by_catalog, name="elements_by_catalog"),
+    path("elements/from/", v.elements_by_catalog, name="elements_by_catalog"),
+    path("element/validation/", v.element_validation, name="element_validation"),
 
-    path("catalogs/", catalogs, name="catalogs"),
-    path("elements/", elements, name="elements"),
+    path("catalogs/", v.catalogs, name="catalogs"),
+    path("elements/", v.elements, name="elements"),
 ]

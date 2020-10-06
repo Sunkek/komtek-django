@@ -33,7 +33,7 @@ class CatalogsActualViewset(viewsets.ModelViewSet):
         """Rewriting the default list function"""
         date = datetime.strptime(date, "%d-%m-%Y") if date else dt_date.today()
         catalogs = Catalog.objects.all().order_by("-date_created")
-        catalogs = catalogs.filter(date_released__lte=date)
+        catalogs = catalogs.filter(date_created__lte=date)
         catalogs = catalogs.filter(Q(date_expired__gt=date) | Q(date_expired=None))
         return Response(utils.paginate(self, catalogs))
 
@@ -48,9 +48,49 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         elements = Element.objects.all().order_by("code")
         catalog_name = self.request.query_params.get("catalog_name")
         catalog_version = self.request.query_params.get("catalog_version")
-        elements = elements.filter(catalog__short_name=catalog_name)
-        elements = elements.filter(catalog__version=catalog_version)
+        if catalog_version: 
+            elements = elements.filter(catalog__short_name=catalog_name)
+            elements = elements.filter(catalog__version=catalog_version)
+        else:
+            catalog = Catalog.objects.filter(short_name=catalog_name)
+            catalog = catalog.latest("date_started", "date_created")
+            elements = elements.filter(catalog=catalog)
         return elements
+        
+
+class ElementValidationViewset(viewsets.ModelViewSet):
+    """Check if the element is valid for 
+    the selected or current catalog version"""
+    queryset = Element.objects.all().order_by('-date_created')
+    serializer_class = ElementSerializer
+        
+    def retrieve(self, request, *args, **kwargs):
+        """Rewriting the default list function"""
+        in_element = request.data.get("element", {})
+        in_catalog = request.data.get("catalog", {})
+        # Filtering - all elements for the specific catalog
+        if in_catalog.get("version") is not None:
+            # If catalog version is provided
+            res_element = Element.objects.filter(
+                catalog__short_name=in_catalog.get("short_name"),
+                catalog__version=in_catalog.get("version"),
+            )
+        else:
+            # If latest catalog version
+            catalog = Catalog.objects.filter(
+                short_name=in_catalog.get("short_name"),
+            )
+            catalog = catalog.latest("date_started", "date_created")
+            res_element = res_element.filter(catalog=catalog)
+        # Filtering - the element with the required code
+        res_element = res_element.get(code=in_element.get("code"))
+        # Validating element description - if provided
+        if in_element.get("description") == res_element.description \
+        or in_element.get("description") is None:
+            serializer = self.get_serializer(res_element)
+            return Response(serializer.data)
+        else:
+            pass
 
 
 """Defining the allowed request methods for each ModelViewSet"""
@@ -67,4 +107,7 @@ catalogs_actual = CatalogsActualViewset.as_view({
 })
 elements_by_catalog = ElementsByCatalogViewset.as_view({
     "get": "list",
+})
+element_validation = ElementValidationViewset.as_view({
+    "get": "retrieve",
 })
