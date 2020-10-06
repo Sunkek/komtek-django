@@ -22,6 +22,6 @@ class Element(models.Model):
         on_delete=models.CASCADE,
         related_name="elements", 
     )
-    code = models.CharField(max_length=50, blank=False, null=False)
+    code = models.CharField(max_length=50, blank=False, null=False, unique=True)
     value = models.CharField(max_length=500, blank=False, null=False)
     date_created = models.DateField(auto_now_add=True)
