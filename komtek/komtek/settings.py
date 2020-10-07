@@ -25,7 +25,7 @@ SECRET_KEY = '9vrtrs%a9su@q2*%!y&07=ypf-$x1lyzysk1%@=*+f&jdov($7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["garant-alv.autolidergroup"]
+ALLOWED_HOSTS = ["garant-alv.autolidergroup", "127.0.0.1"]
 
 
 # Application definition
