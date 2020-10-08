@@ -1,7 +1,11 @@
+from django.contrib import admin
 from django.urls import include, path
+
 import komtek.api.views as v
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     path("catalogs/actual/<str:date>/", v.catalogs_actual, name="catalogs_actual"),
     path("catalogs/actual/", v.catalogs_actual, name="catalogs_actual"),
 

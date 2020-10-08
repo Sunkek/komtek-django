@@ -42,10 +42,15 @@ class Element(models.Model):
         "Catalog", 
         on_delete=models.CASCADE,
         related_name="elements", 
+        verbose_name="Каталог"
     )
     code = models.CharField("Код", max_length=50, blank=False, null=False)
     description = models.CharField("Описание", max_length=500, blank=False, null=False)
     date_created = models.DateField("Дата создания", auto_now_add=True)
+    
+    def __str__(self):
+        dots = "..." if len(self.description) > 10 else ""
+        return f"{self.code} {self.description[:10]}{dots}"
     
     # Only one code can be present in a catalog
     class Meta:
