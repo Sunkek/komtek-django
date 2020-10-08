@@ -14,6 +14,10 @@ class CatalogsViewset(viewsets.ModelViewSet):
     """Display all catalogs"""
     queryset = Catalog.objects.all().order_by('-date_created')
     serializer_class = CatalogSerializer
+    
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        serializer.save(version=utils.format_version(data["version"]))
 
 
 class ElementsViewset(viewsets.ModelViewSet):
