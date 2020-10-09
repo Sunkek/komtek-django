@@ -17,7 +17,7 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy entrypoint
-COPY ./komtek-api-entrypoint.sh .
+COPY komtek-api-entrypoint.sh komtek-api-entrypoint.sh
 
 # copy project
 COPY . .
