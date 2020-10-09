@@ -38,7 +38,7 @@ class Catalog(models.Model):
 
 class Element(models.Model):
     """An element of a catalog"""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.AutoField(primary_key=True)
     catalog = models.ForeignKey(
         "Catalog", 
         on_delete=models.CASCADE,
