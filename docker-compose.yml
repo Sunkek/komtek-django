@@ -15,9 +15,9 @@ services:
       
   db:
     image: postgres-alpine
-    volumes:
-      # Mounting a database in the host system so it's
-      # persistent through different containers
-      # - ${HOME}postgres_data:/var/lib/postgresql/data/
+    #volumes:
+    #  # Mounting a database in the host system so it's
+    #  # persistent through different containers
+    #  - ${HOME}postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./komtek-db.env
