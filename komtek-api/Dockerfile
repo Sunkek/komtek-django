@@ -16,12 +16,10 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-# migrate the database
-RUN python manage.py migrate --noinput
-RUN python manage.py makemigrations --noinput
-RUN python manage.py migrate --noinput
-# create superuser for testing
-RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('komtek-admin', 'admin@komtek.com', 'komtek-admin')" | python manage.py shell
-
 # copy project
 COPY . .
+
+
+# run entrypoint.sh
+COPY entrypoint.sh entrypoint.sh
+ENTRYPOINT ["/usr/src/app/komtek/entrypoint.sh"]
