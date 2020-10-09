@@ -38,7 +38,7 @@ class CatalogsActualViewset(viewsets.ModelViewSet):
         date = self.request.parser_context["kwargs"].get("date")
         date = datetime.strptime(date, "%d-%m-%Y") if date else dt_date.today()
         catalogs = Catalog.objects.all().order_by("-date_created")
-        catalogs = catalogs.filter(date_created__lte=date)
+        catalogs = catalogs.filter(date_started__lte=date)
         catalogs = catalogs.filter(Q(date_expired__gt=date) | Q(date_expired=None))
         return catalogs
 
