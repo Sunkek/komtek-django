@@ -35,6 +35,7 @@ class CatalogsActualViewset(viewsets.ModelViewSet):
         
     def get_queryset(self):
         """Overriding the default get_queryset to select actual catalogs"""
+        print(self.request.__dict__)
         date = self.request.kwargs.get("date")
         date = datetime.strptime(date, "%d-%m-%Y") if date else dt_date.today()
         catalogs = Catalog.objects.all().order_by("-date_created")
