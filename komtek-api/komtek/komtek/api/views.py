@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-import komtek.api.utils as utils
+from komtek.api.utils import format_version
 from .models import Catalog, Element
 from .serializers import CatalogSerializer, ElementSerializer
 
@@ -17,7 +17,7 @@ class CatalogsViewset(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         data = serializer.validated_data
-        serializer.save(version=utils.format_version(data["version"]))
+        serializer.save(version=format_version(data["version"]))
 
 
 class ElementsViewset(viewsets.ModelViewSet):
@@ -55,7 +55,9 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         catalog_version = self.request.query_params.get("catalog_version")
         if catalog_version: 
             elements = elements.filter(catalog__short_name=catalog_name)
-            elements = elements.filter(catalog__version=catalog_version)
+            elements = elements.filter(
+                catalog__version=format_version(catalog_version)
+            )
         else:
             catalog = Catalog.objects.filter(short_name=catalog_name)
             catalog = catalog.latest("date_started", "date_created")
@@ -78,7 +80,7 @@ class ElementValidationViewset(viewsets.ModelViewSet):
             # If catalog version is provided
             res_element = Element.objects.filter(
                 catalog__short_name=in_catalog.get("short_name"),
-                catalog__version=in_catalog.get("version"),
+                catalog__version=format_version(in_catalog.["version"]),
             )
         else:
             # If latest catalog version
