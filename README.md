@@ -25,7 +25,7 @@ docker-compose exec api python manage.py createsuperuser
 
 ### Панель администратора
 
-`/api/v1/admin/`
+`/admin/`
 
 Позволяет создавать, редактировать и удалять справочники и их элементы при помощи 
 несложного дефолтного UI Django. Переводом UI я не озадачился, но указал 
@@ -33,13 +33,13 @@ docker-compose exec api python manage.py createsuperuser
 
 ### Список всех справочников
 
-GET `/api/v1/catalogs/`
+GET `/catalogs/`
 
 Всё и так понятно - получаем все существующие справочники.
 
 ### Список справочников, актуальных на указанную дату
 
-GET `/api/v1/catalogs/actual/<dd-mm-yyyy>/`
+GET `/catalogs/actual/<dd-mm-yyyy>/`
 
 Получаем все справочники, которые были созданы до указанной даты и не успели истечь 
 до неё же. Если не указывать дату, то API выдаст актуальные справочники на текущий 
@@ -52,7 +52,7 @@ GET `/api/v1/catalogs/actual/<dd-mm-yyyy>/`
 
 ### Элементы заданного справочника указанной/текущей версии
 
-GET `api/v1/elements/from/?catalog_name=<name>&catalog_version=<version>`
+GET `/elements/from/?catalog_name=<name>&catalog_version=<version>`
 
 Получаем все элементы указанного справочника. Если версия не указана, берётся 
 справочник с самой свежей датой начала действия.
@@ -62,7 +62,7 @@ GET `api/v1/elements/from/?catalog_name=<name>&catalog_version=<version>`
 
 ### Валидация элемента заданного справочника по указанной/текущей версии
 
-GET `/api/v1/element/validation/`
+GET `/element/validation/`
 
 Проверяем, валидный элемент или нет. Для проверки требуется в API передать JSON 
 следующего вида:
