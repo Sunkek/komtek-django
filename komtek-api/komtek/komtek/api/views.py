@@ -80,7 +80,7 @@ class ElementValidationViewset(viewsets.ModelViewSet):
             # If catalog version is provided
             res_element = Element.objects.filter(
                 catalog__short_name=in_catalog.get("short_name"),
-                catalog__version=format_version(in_catalog.["version"]),
+                catalog__version=format_version(in_catalog["version"]),
             )
         else:
             # If latest catalog version
