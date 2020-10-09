@@ -16,7 +16,7 @@ def validate_version(value):
 
 class Catalog(models.Model):
     """Catalog model description with all the required fields"""
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     short_name = models.CharField("Короткое название", max_length=50)
     full_name = models.CharField("Полное название", max_length=200)
     description = models.CharField("Описание",max_length=1000)
