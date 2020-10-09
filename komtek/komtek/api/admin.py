@@ -6,6 +6,7 @@ from .utils import format_version
 class CatalogAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
+        """Overriding Catalog's save model function to format its version"""
         obj.version = format_version(obj.version)
         super().save_model(request, obj, form, change)
 

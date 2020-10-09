@@ -100,11 +100,11 @@ class ElementValidationViewset(viewsets.ModelViewSet):
 """Defining the allowed request methods for each ModelViewSet"""
 catalogs = CatalogsViewset.as_view({
     "get": "list",
-    "post": "create",
+    #"post": "create",  # Uncomment if you want to create catalogs in the API
 })
 elements = ElementsViewset.as_view({
     "get": "list",
-    "post": "create",
+    #"post": "create",  # Uncomment if you want to create elements in the API
 })
 catalogs_actual = CatalogsActualViewset.as_view({
     "get": "list",
