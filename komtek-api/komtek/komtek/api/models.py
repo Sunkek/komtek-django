@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+import uuid
 
 VERSION_SYMBOLS = list("1234567890.")
 
@@ -15,7 +16,7 @@ def validate_version(value):
 
 class Catalog(models.Model):
     """Catalog model description with all the required fields"""
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     short_name = models.CharField("Короткое название", max_length=50)
     full_name = models.CharField("Полное название", max_length=200)
     description = models.CharField("Описание",max_length=1000)
@@ -37,7 +38,7 @@ class Catalog(models.Model):
 
 class Element(models.Model):
     """An element of a catalog"""
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     catalog = models.ForeignKey(
         "Catalog", 
         on_delete=models.CASCADE,
