@@ -5,7 +5,7 @@ services:
   api:
     image: api
     build: komtek-api/.
-    command: python manage.py runserver
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./komtek-api/:/usr/src/app/
     ports:
