@@ -12,3 +12,12 @@ services:
       - 8000:8000
     env_file:
       - ./komtek-api.env
+      
+  db:
+    image: postgres-alpine
+    volumes:
+      # Mounting a database in the host system so it's
+      # persistent through different containers
+      # - ${HOME}postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./komtek-db.env
