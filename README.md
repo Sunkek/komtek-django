@@ -13,10 +13,6 @@
 
 ```
 docker-compose exec api python manage.py makemigrations --noinput
-
 docker-compose exec api python manage.py migrate --noinput
-
-docker-compose exec api python manage.py makemigrations --noinput
-
 docker-compose exec api python manage.py createsuperuser
 ```

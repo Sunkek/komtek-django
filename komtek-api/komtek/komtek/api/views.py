@@ -33,13 +33,13 @@ class CatalogsActualViewset(viewsets.ModelViewSet):
     queryset = Catalog.objects.all().order_by('-date_created')
     serializer_class = CatalogSerializer
         
-    def list(self, request, date=None, *args, **kwargs):
-        """Rewriting the default list function"""
+    def get_queryset(self):
+        """Overriding the default get_queryset to select actual catalogs"""
         date = datetime.strptime(date, "%d-%m-%Y") if date else dt_date.today()
         catalogs = Catalog.objects.all().order_by("-date_created")
         catalogs = catalogs.filter(date_created__lte=date)
         catalogs = catalogs.filter(Q(date_expired__gt=date) | Q(date_expired=None))
-        return Response(utils.paginate(self, catalogs))
+        return catalogs
 
 
 class ElementsByCatalogViewset(viewsets.ModelViewSet):
