@@ -88,7 +88,7 @@ class ElementValidationViewset(viewsets.ModelViewSet):
                 short_name=in_catalog.get("short_name"),
             )
             catalog = catalog.latest("date_started", "date_created")
-            res_element = res_element.filter(catalog=catalog)
+            res_element = Element.objects.filter(catalog=catalog)
         # Filtering - the element with the required code
         res_element = res_element.get(code=in_element.get("code"))
         # Validating element description - if provided
