@@ -2,7 +2,11 @@
 
 Суть задания описана в [task.md](task.md).
 
-Задание ещё не выполнено до конца.
+Задание ещё не выполнено до конца : 
+
+- Более детальные сообщения об ошибках.
+- Описание эндроинтов и примеры использования.
+- ID не глобальный.
 
 
 ## Установка
@@ -16,3 +20,10 @@ docker-compose exec api python manage.py makemigrations --noinput
 docker-compose exec api python manage.py migrate --noinput
 docker-compose exec api python manage.py createsuperuser
 ```
+
+...
+
+
+Побаловаться с API и админской панелью можно по адресу 
+http://51.158.163.234:8000/api/v1/ 
+(не обещаю, что буду держать его запущенным 24/7).
