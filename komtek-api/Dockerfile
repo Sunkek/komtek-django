@@ -23,4 +23,4 @@ COPY ./komtek-api-entrypoint.sh .
 COPY . .
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/komtek/komtek-api-entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/komtek-api-entrypoint.sh"]
