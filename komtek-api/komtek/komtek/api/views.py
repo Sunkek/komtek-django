@@ -53,15 +53,15 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         elements = Element.objects.all().order_by("code")
         catalog_name = self.request.query_params.get("catalog_name")
         catalog_version = self.request.query_params.get("catalog_version")
-        if catalog_version: 
+        if catalog_name and not catalog_version:
+            catalog = Catalog.objects.filter(short_name=catalog_name)
+            catalog = catalog.latest("date_started", "date_created")
+            elements = elements.filter(catalog=catalog)
+        else: 
             elements = elements.filter(catalog__short_name=catalog_name)
             elements = elements.filter(
                 catalog__version=format_version(catalog_version)
             )
-        else:
-            catalog = Catalog.objects.filter(short_name=catalog_name)
-            catalog = catalog.latest("date_started", "date_created")
-            elements = elements.filter(catalog=catalog)
         return elements
         
 
