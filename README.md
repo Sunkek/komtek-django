@@ -52,7 +52,7 @@ GET [`/catalogs/actual/<dd-mm-yyyy>/`](http://www.komtek.suncake.ga/api/v1/actua
 
 ### Элементы заданного справочника указанной/текущей версии
 
-GET [`/elements/from/?catalog_name=<name>&catalog_version=<version>`]](http://www.komtek.suncake.ga/api/v1/elements/from/)
+GET [`/elements/from/?catalog_name=<name>&catalog_version=<version>`](http://www.komtek.suncake.ga/api/v1/elements/from/)
 
 Получаем все элементы указанного справочника. Если версия не указана, берётся 
 справочник с самой свежей датой начала действия.
