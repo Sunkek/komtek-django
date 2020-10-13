@@ -6,10 +6,8 @@ def custom_exception_handler(exc, context):
     # to get the standard error response.
     response = exception_handler(exc, context)
     print("EXCEPTION")
-    print("exc")
-    print(type(exc))
-    print(exc.__dict__)
-    print(type(context))
-    print(context.__dict__)
+    print(exc.detail)
+    print(exc.get_codes())
+    print(exc.get_full_details())
 
     return response
