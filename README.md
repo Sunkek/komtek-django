@@ -39,7 +39,7 @@ GET [`/catalogs/`](http://www.komtek.suncake.ga/api/v1/catalogs/)
 
 ### Список справочников, актуальных на указанную дату
 
-GET [`/catalogs/actual/<dd-mm-yyyy>/`](http://www.komtek.suncake.ga/api/v1/actual/)
+GET [`/catalogs/actual/<dd-mm-yyyy>/`](http://www.komtek.suncake.ga/api/v1/catalogs/actual/01-10-2020/)
 
 Получаем все справочники, которые были созданы до указанной даты и не успели истечь 
 до неё же. Если не указывать дату, то API выдаст актуальные справочники на текущий 
@@ -52,7 +52,7 @@ GET [`/catalogs/actual/<dd-mm-yyyy>/`](http://www.komtek.suncake.ga/api/v1/actua
 
 ### Элементы заданного справочника указанной/текущей версии
 
-GET [`/elements/from/?catalog_name=<name>&catalog_version=<version>`](http://www.komtek.suncake.ga/api/v1/elements/from/)
+GET [`/elements/from/?catalog_name=<name>&catalog_version=<version>`](http://www.komtek.suncake.ga/api/v1/elements/from/?catalog_name=%D0%A2%D0%B5%D1%81%D1%82&catalog_version=0.1)
 
 Получаем все элементы указанного справочника. Если версия не указана, берётся 
 справочник с самой свежей датой начала действия.
