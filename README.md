@@ -25,7 +25,7 @@ docker-compose exec api python manage.py createsuperuser
 
 ### Панель администратора
 
-`/admin/`
+[`/admin/`](http://www.komtek.suncake.ga/api/v1/admin/)
 
 Позволяет создавать, редактировать и удалять справочники и их элементы при помощи 
 несложного дефолтного UI Django. Переводом UI я не озадачился, но указал 
@@ -33,13 +33,13 @@ docker-compose exec api python manage.py createsuperuser
 
 ### Список всех справочников
 
-GET `/catalogs/`
+GET [`/catalogs/`](http://www.komtek.suncake.ga/api/v1/catalogs/)
 
 Всё и так понятно - получаем все существующие справочники.
 
 ### Список справочников, актуальных на указанную дату
 
-GET `/catalogs/actual/<dd-mm-yyyy>/`
+GET [`/catalogs/actual/<dd-mm-yyyy>/`](http://www.komtek.suncake.ga/api/v1/actual/)
 
 Получаем все справочники, которые были созданы до указанной даты и не успели истечь 
 до неё же. Если не указывать дату, то API выдаст актуальные справочники на текущий 
@@ -52,7 +52,7 @@ GET `/catalogs/actual/<dd-mm-yyyy>/`
 
 ### Элементы заданного справочника указанной/текущей версии
 
-GET `/elements/from/?catalog_name=<name>&catalog_version=<version>`
+GET [`/elements/from/?catalog_name=<name>&catalog_version=<version>`]](http://www.komtek.suncake.ga/api/v1/elements/from/)
 
 Получаем все элементы указанного справочника. Если версия не указана, берётся 
 справочник с самой свежей датой начала действия.
@@ -62,7 +62,7 @@ GET `/elements/from/?catalog_name=<name>&catalog_version=<version>`
 
 ### Валидация элемента заданного справочника по указанной/текущей версии
 
-GET `/element/validation/`
+GET [`/element/validation/`](http://www.komtek.suncake.ga/api/v1/element/validation)
 
 Проверяем, валидный элемент или нет. Для проверки требуется в API передать JSON 
 следующего вида:
@@ -87,11 +87,10 @@ GET `/element/validation/`
 через тело запроса. Такое не получится проверить в браузере, можно использовать 
 REST-клиент типа Postman.
 
-
 ### Я не хочу деплоить это на своей машине
 
 Побаловаться с API и админской панелью можно по адресу 
-http://51.158.163.234:8000/api/v1/ 
+http://www.komtek.suncake.ga/api/v1/
 (не обещаю, что буду держать его запущенным 24/7).
 
 Логин и пароль для админа - `komtek-admin`.
