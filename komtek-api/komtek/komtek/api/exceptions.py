@@ -7,7 +7,10 @@ def custom_exception_handler(exc, context):
     # to get the standard error response.
     response = exception_handler(exc, context)
     print("EXCEPTION")
+    # Catalog with specified parameters doesn't exist
     if isinstance(exc, Catalog.DoesNotExist):
-        print(exc.__dict__)
+        pass
+    # Element doesn't exist in specified catalog
+    # Element exists, but its description is different
 
     return response

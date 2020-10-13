@@ -67,7 +67,7 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
             catalog = Catalog.objects.get(
                 short_name=catalog_name,
                 version=format_version(catalog_version)
-                )
+            )
             elements = elements.filter(catalog=catalog)
         return elements
         
