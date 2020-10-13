@@ -56,12 +56,19 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         if catalog_name and not catalog_version:
             catalog = Catalog.objects.filter(short_name=catalog_name)
             catalog = catalog.latest("date_started", "date_created")
+            if not catalog:
+                raise Catalog.DoesNotExist(
+                    f"Catalog with short name {catalog_name} does not exist."
+                )
             elements = elements.filter(catalog=catalog)
         else: 
-            elements = elements.filter(catalog__short_name=catalog_name)
-            elements = elements.filter(
-                catalog__version=format_version(catalog_version)
-            )
+            # Two queries isntead of one - can be optimized, but it
+            # allows for better exception management
+            catalog = Catalog.objects.get(
+                short_name=catalog_name,
+                version=format_version(catalog_version)
+                )
+            elements = elements.filter(catalog=catalog)
         return elements
         
 
