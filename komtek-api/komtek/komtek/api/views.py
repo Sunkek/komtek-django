@@ -1,5 +1,6 @@
 from datetime import date as dt_date
 from datetime import datetime
+from json import loads
 
 from django.db.models import Q
 from rest_framework import viewsets, status
@@ -80,7 +81,7 @@ class ElementValidationViewset(viewsets.ModelViewSet):
         
     def retrieve(self, request, *args, **kwargs):
         """Rewriting the default list function"""
-        data = request.data
+        data = loads(request.body)
         in_element = data.get("element", {})
         in_catalog = data.get("catalog", {})
         # Filtering - all elements for the specific catalog
