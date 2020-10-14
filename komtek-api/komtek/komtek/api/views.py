@@ -80,8 +80,9 @@ class ElementValidationViewset(viewsets.ModelViewSet):
         
     def retrieve(self, request, *args, **kwargs):
         """Rewriting the default list function"""
-        in_element = request.data.get("element", {})
-        in_catalog = request.data.get("catalog", {})
+        data = request.data
+        in_element = data.get("element", {})
+        in_catalog = data.get("catalog", {})
         # Filtering - all elements for the specific catalog
         if in_catalog.get("version") is not None:
             # If catalog version is provided
