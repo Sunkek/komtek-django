@@ -1,5 +1,5 @@
 from rest_framework.views import exception_handler
-from komtek.api.models import Catalog
+from komtek.api.models import Catalog, Element
 
 def custom_exception_handler(exc, context):
     """Custom handler to make more verbose error responses"""
@@ -9,8 +9,9 @@ def custom_exception_handler(exc, context):
     print("EXCEPTION")
     # Catalog with specified parameters doesn't exist
     if isinstance(exc, Catalog.DoesNotExist):
-        pass
+        response.data["error"] = "Справочника с указанными названием и версией не существует."
     # Element doesn't exist in specified catalog
-    # Element exists, but its description is different
+    if isinstance(exc, Element.DoesNotExist):
+        response.data["error"] = "Элемента с указанными кодом и значением не существует в этом справочнике."
 
     return response
