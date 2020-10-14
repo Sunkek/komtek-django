@@ -125,5 +125,5 @@ elements_by_catalog = ElementsByCatalogViewset.as_view({
     "get": "list",
 })
 element_validation = ElementValidationViewset.as_view({
-    "get": "retrieve",
+    "post": "retrieve",
 })
