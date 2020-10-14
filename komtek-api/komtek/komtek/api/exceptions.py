@@ -11,11 +11,13 @@ def custom_exception_handler(exc, context):
     print("EXCEPTION")
     # Catalog with specified parameters doesn't exist
     if isinstance(exc, Catalog.DoesNotExist):
-        err_data = {"MSG_HEADER": "Справочника с указанными названием и версией не существует."}
-        response = response or HttpResponseBadRequest(err_data)
+        response = response or HttpResponseBadRequest(
+            "Справочника с указанными названием и версией не существует."
+        )
     # Element doesn't exist in specified catalog
     if isinstance(exc, Element.DoesNotExist):
-        err_data = {"MSG_HEADER": "Элемента с указанными кодом и значением не существует в этом справочнике."}
-        response = response or HttpResponseBadRequest(err_data)
+        response = response or HttpResponseBadRequest(
+            "Элемента с указанными кодом и значением не существует в этом справочнике."
+        )
 
     return response
