@@ -106,7 +106,7 @@ class ElementValidationViewset(viewsets.ModelViewSet):
             serializer = self.get_serializer(res_element)
             return Response(serializer.data)
         else:
-            pass
+            raise Element.DoesNotExist
 
 
 """Defining the allowed request methods for each ModelViewSet"""
