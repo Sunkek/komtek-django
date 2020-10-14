@@ -16,12 +16,12 @@ services:
 #    depends_on:
 #      - db
 
-nginx:
-  build: nginx/.
-  ports:
-    - 1337:80
-  depends_on:
-    - api
+  nginx:
+    build: nginx/.
+    ports:
+      - 1337:80
+    depends_on:
+      - api
 
 #  db:
 #    image: postgres:alpine
