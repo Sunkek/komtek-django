@@ -1,4 +1,6 @@
 from rest_framework.views import exception_handler
+from django.http import HttpResponseBadRequest
+
 from komtek.api.models import Catalog, Element
 
 def custom_exception_handler(exc, context):
@@ -8,10 +10,12 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
     print("EXCEPTION")
     # Catalog with specified parameters doesn't exist
-    if isinstance(exc, Catalog.DoesNotExist) and response is not None:
-        response.data["error"] = "Справочника с указанными названием и версией не существует."
+    if isinstance(exc, Catalog.DoesNotExist):
+        err_data = {"MSG_HEADER": "Справочника с указанными названием и версией не существует."}
+        response = response or HttpResponseBadRequest(err_data)
     # Element doesn't exist in specified catalog
-    if isinstance(exc, Element.DoesNotExist) and response is not None:
-        response.data["error"] = "Элемента с указанными кодом и значением не существует в этом справочнике."
+    if isinstance(exc, Element.DoesNotExist):
+        err_data = {"MSG_HEADER": "Элемента с указанными кодом и значением не существует в этом справочнике."}
+        response = response or HttpResponseBadRequest(err_data)
 
     return response
