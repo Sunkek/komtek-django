@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from rest_framework.views import exception_handler
 from django.http import HttpResponseBadRequest
 
@@ -9,15 +11,20 @@ def custom_exception_handler(exc, context):
     # to get the standard error response.
     response = exception_handler(exc, context)
     print("EXCEPTION")
-    # Catalog with specified parameters doesn't exist
     if isinstance(exc, Catalog.DoesNotExist):
+        # Catalog with specified parameters doesn't exist
         response = response or HttpResponseBadRequest(
             "Справочника с указанными названием и версией не существует."
         )
-    # Element doesn't exist in specified catalog
-    if isinstance(exc, Element.DoesNotExist):
+    elif isinstance(exc, Element.DoesNotExist):
+        # Element doesn't exist in specified catalog
         response = response or HttpResponseBadRequest(
             "Элемента с указанными кодом и значением не существует в этом справочнике."
+        )
+    elif isinstance(exc, JSONDecodeError):
+        # JSON is badly formatted
+        response = response or HttpResponseBadRequest(
+            "Невозможно расшифровать полученный JSON."
         )
 
     return response
