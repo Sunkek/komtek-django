@@ -8,10 +8,10 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
     print("EXCEPTION")
     # Catalog with specified parameters doesn't exist
-    if isinstance(exc, Catalog.DoesNotExist):
+    if isinstance(exc, Catalog.DoesNotExist) and response is not None:
         response.data["error"] = "Справочника с указанными названием и версией не существует."
     # Element doesn't exist in specified catalog
-    if isinstance(exc, Element.DoesNotExist):
+    if isinstance(exc, Element.DoesNotExist) and response is not None:
         response.data["error"] = "Элемента с указанными кодом и значением не существует в этом справочнике."
 
     return response
