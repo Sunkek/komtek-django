@@ -15,10 +15,9 @@
 ### 2
 
 Входим в репозиторий при помощи `cd komtek-django` и создаём файл с переменными окружения для нашего API: 
-```
-touch komtek-api.env
-vim komtek-api.env
-```
+
+`touch komtek-api.env
+vim komtek-api.env`
 
 Содержание файла должно иметь следующий вид:
 ```
@@ -26,21 +25,35 @@ DEBUG=1
 SECRET_KEY=qwertyasdfghzxcvbn
 ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 ```
-DEBUG=1 - включен тестовый режим, не использовать в продакшне! SECRET_KEY тоже нужно будет посерьёзнее. В ALLOWED_HOSTS можно добавить публичный IP и домен хоста.
+`DEBUG=1` - включен тестовый режим, не использовать в продакшне! `SECRET_KEY` тоже нужно будет посерьёзнее. В `ALLOWED_HOSTS` можно добавить публичный IP и домен хоста.
 
+### 3
 
+Строим и запускаем контейнер:
 
-...
+`docker-compose up --build`
 
-После запуска контейнеров нужно мигрировать базу данных и создать суперюзера:
+### 4 
+
+После запуска контейнера нужно мигрировать базу данных и создать суперюзера для входа в админскую панель. Открываем терминал в этой же директории (или используем tmux):
 
 ```
-docker-compose exec api python manage.py makemigrations --noinput
-docker-compose exec api python manage.py migrate --noinput
+docker-compose exec api python manage.py makemigrations
+docker-compose exec api python manage.py migrate
+docker-compose exec api python manage.py makemigrations api
+docker-compose exec api python manage.py migrate api
 docker-compose exec api python manage.py createsuperuser
 ```
 
-...
+Готово!
+
+### Я не хочу деплоить это на своей машине
+
+Побаловаться с API и админской панелью можно по адресу 
+http://www.komtek.suncake.ga/api/v1/
+(не обещаю, что буду держать его запущенным 24/7).
+
+Логин и пароль для админа - `komtek-admin`.
 
 ## REST API
 
@@ -107,11 +120,3 @@ POST [`/element/validation/`](http://www.komtek.suncake.ga/api/v1/element/valida
 Этот эндпоинт демонстрирует возможность передачи динамически меняющихся данных 
 через тело запроса. Такое не получится проверить в браузере, можно использовать 
 REST-клиент типа Postman.
-
-### Я не хочу деплоить это на своей машине
-
-Побаловаться с API и админской панелью можно по адресу 
-http://www.komtek.suncake.ga/api/v1/
-(не обещаю, что буду держать его запущенным 24/7).
-
-Логин и пароль для админа - `komtek-admin`.
