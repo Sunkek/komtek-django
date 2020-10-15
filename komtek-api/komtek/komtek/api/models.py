@@ -9,7 +9,7 @@ def validate_version(value):
     for symbol in value:
         if symbol not in VERSION_SYMBOLS or value.count(".") > 3:
             raise ValidationError(
-                "Bad version number. Examples of allowed version formats: `1.0`, `2`, `3.0.1`, `4.10.10`.",
+                "Некорректный формат версии. Пример корректных форматов: `1.0`, `2`, `3.0.1`, `4.10.10`.",
                 params={"value": value},
             )
     
@@ -34,6 +34,8 @@ class Catalog(models.Model):
     # Catalogs should have unique versions
     class Meta:
         unique_together = ("short_name", "version")
+        verbose_name = "Элемент"
+        verbose_name_plural = "Элементы"
 
 
 class Element(models.Model):
@@ -56,3 +58,5 @@ class Element(models.Model):
     # Only one code can be present in a catalog
     class Meta:
         unique_together = ("catalog", "code")
+        verbose_name = "Справочник"
+        verbose_name_plural = "Справочники"
