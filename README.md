@@ -40,15 +40,15 @@ ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 
 После запуска контейнера нужно мигрировать базу данных и создать суперюзера для входа в админскую панель. Открываем терминал в этой же директории (или используем tmux):
 
-`docker-compose exec api python manage.py makemigrations
+`docker-compose exec api python manage.py makemigrations`
 
-docker-compose exec api python manage.py migrate
+`docker-compose exec api python manage.py migrate`
 
-docker-compose exec api python manage.py makemigrations api
+`docker-compose exec api python manage.py makemigrations api`
 
-docker-compose exec api python manage.py migrate api
+`docker-compose exec api python manage.py migrate api`
 
-docker-compose exec api python manage.py createsuperuser`
+`docker-compose exec api python manage.py createsuperuser`
 
 Готово!
 
