@@ -18,9 +18,9 @@
 
 Входим в репозиторий при помощи `cd komtek-django` и создаём файл с переменными окружения для нашего API: 
 
-`touch komtek-api.env
+`touch komtek-api.env`
 
-vim komtek-api.env`
+`vim komtek-api.env`
 
 Содержание файла должно иметь следующий вид:
 ```
