@@ -16,14 +16,14 @@ services:
 #    depends_on:
 #      - db
 
-  nginx:
-    build: nginx/.
-    volumes:
-      - static_volume:/home/app/komtek-api/komtek/static
-    ports:
-      - 1337:80
-    depends_on:
-      - api
+#  nginx:
+#    build: nginx/.
+#    volumes:
+#      - static_volume:/home/app/komtek-api/komtek/static
+#    ports:
+#      - 1337:80
+#    depends_on:
+#      - api
 
 #  db:
 #    image: postgres:alpine
