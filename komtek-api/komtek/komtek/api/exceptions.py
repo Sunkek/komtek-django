@@ -9,7 +9,6 @@ def custom_exception_handler(exc, context):
     """Custom handler to make more verbose error responses"""
     # Call REST framework's default exception handler first,
     # to get the standard error response.
-    print(exc)
     response = exception_handler(exc, context)
     if isinstance(exc, Catalog.DoesNotExist):
         # Catalog with specified parameters doesn't exist
