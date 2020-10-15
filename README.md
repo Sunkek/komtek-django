@@ -2,7 +2,7 @@
 
 Суть задания описана в [task.md](task.md).
 
-В режиме дебага приложение легко запускается и тестируется при помощи обычной `python manage.py runserver`, но для размещения на моём VPS пришлось попотеть и завернуть всё в nginx.
+В режиме дебага приложение легко запускается и тестируется при помощи обычной `python manage.py runserver`, но для деплоя на моём VPS пришлось попотеть и завернуть всё в nginx.
 
 ## Установка
 
@@ -27,16 +27,33 @@
 DEBUG=1
 SECRET_KEY=qwertyasdfghzxcvbn
 ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=komtek_db
+SQL_USER=komtek-api
+SQL_PASSWORD=komtek-password
+SQL_HOST=db
+SQL_PORT=5432
+DATABASE=postgres
 ```
 `DEBUG=1` - включен тестовый режим, не использовать в продакшне! `SECRET_KEY` тоже нужно будет посерьёзнее. В `ALLOWED_HOSTS` можно добавить публичный IP и домен хоста.
 
 ### 3
 
+Точно так же создаём файл с переменными среды для БД:
+
+```
+POSTGRES_USER=komtek-api
+POSTGRES_PASSWORD=komtek-password
+POSTGRES_DB=komtek_db
+```
+
+### 4
+
 Строим и запускаем контейнер:
 
 `docker-compose up --build`
 
-### 4 
+### 5
 
 После запуска контейнера нужно мигрировать базу данных и создать суперюзера для входа в админскую панель. Открываем терминал в этой же директории (или используем tmux):
 
