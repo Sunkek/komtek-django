@@ -2,6 +2,8 @@
 
 Суть задания описана в [task.md](task.md).
 
+В режиме дебага приложение легко запускается и тестируется при помощи обычной `python manage.py runserver`, но для размещения на моём VPS пришлось попотеть и завернуть всё в nginx.
+
 ## Установка
 
 Для начала нужно иметь установленные Docker и Docker-compose. 
@@ -38,15 +40,15 @@ ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 
 После запуска контейнера нужно мигрировать базу данных и создать суперюзера для входа в админскую панель. Открываем терминал в этой же директории (или используем tmux):
 
-`docker-compose exec api python manage.py makemigrations
+`docker-compose exec api python manage.py makemigrations`
 
-docker-compose exec api python manage.py migrate
+`docker-compose exec api python manage.py migrate`
 
-docker-compose exec api python manage.py makemigrations api
+`docker-compose exec api python manage.py makemigrations api`
 
-docker-compose exec api python manage.py migrate api
+`docker-compose exec api python manage.py migrate api`
 
-docker-compose exec api python manage.py createsuperuser`
+`docker-compose exec api python manage.py createsuperuser`
 
 Готово!
 
@@ -121,5 +123,8 @@ POST [`/element/validation/`](http://www.komtek.suncake.ga/api/v1/element/valida
 Если не передавать описание элемента, то API просто вернёт элемент по его коду (если тот существует).
 
 Этот эндпоинт демонстрирует возможность передачи динамически меняющихся данных 
-через тело запроса. Такое не получится проверить в браузере, можно использовать 
-REST-клиент типа Postman.
+через тело запроса.
+
+## P.S.
+
+Моё почтение авторам [этого гайда](https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/).
