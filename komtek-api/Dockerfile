@@ -18,3 +18,6 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
+
+# set work directory
+WORKDIR /usr/src/app/komtek/komtek
