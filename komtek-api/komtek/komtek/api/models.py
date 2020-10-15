@@ -34,8 +34,8 @@ class Catalog(models.Model):
     # Catalogs should have unique versions
     class Meta:
         unique_together = ("short_name", "version")
-        verbose_name = "Элемент"
-        verbose_name_plural = "Элементы"
+        verbose_name = "Справочник"
+        verbose_name_plural = "Справочники"
 
 
 class Element(models.Model):
@@ -58,5 +58,5 @@ class Element(models.Model):
     # Only one code can be present in a catalog
     class Meta:
         unique_together = ("catalog", "code")
-        verbose_name = "Справочник"
-        verbose_name_plural = "Справочники"
+        verbose_name = "Элемент"
+        verbose_name_plural = "Элементы"
