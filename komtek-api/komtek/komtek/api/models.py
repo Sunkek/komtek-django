@@ -45,7 +45,7 @@ class Element(models.Model):
         "Catalog", 
         on_delete=models.CASCADE,
         related_name="elements", 
-        verbose_name="Каталог"
+        verbose_name="Справочник"
     )
     code = models.CharField("Код", max_length=50, blank=False, null=False)
     description = models.CharField("Описание", max_length=500, blank=False, null=False)
