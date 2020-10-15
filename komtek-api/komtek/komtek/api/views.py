@@ -51,32 +51,29 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         
     def get_queryset(self):
         """Overriding the default get_queryset for clarity"""
-        try:
-            elements = Element.objects.all().order_by("code")
-            catalog_name = self.request.query_params.get("catalog_name")
-            catalog_version = self.request.query_params.get("catalog_version")
-            if catalog_name and not catalog_version:
-                catalog = Catalog.objects.filter(
-                    short_name=catalog_name,
-                    date_started__lte=dt_date.today()
+        elements = Element.objects.all().order_by("code")
+        catalog_name = self.request.query_params.get("catalog_name", "")
+        catalog_version = self.request.query_params.get("catalog_version", "")
+        if catalog_name and not catalog_version:
+            catalog = Catalog.objects.filter(
+                short_name=catalog_name,
+                date_started__lte=dt_date.today()
+            )
+            catalog = catalog.latest("date_started", "date_created")
+            if not catalog:
+                raise Catalog.DoesNotExist(
+                    f"Catalog with short name {catalog_name} does not exist."
                 )
-                catalog = catalog.latest("date_started", "date_created")
-                if not catalog:
-                    raise Catalog.DoesNotExist(
-                        f"Catalog with short name {catalog_name} does not exist."
-                    )
-                elements = elements.filter(catalog=catalog)
-            else: 
-                # Two queries isntead of one - can be optimized, but it
-                # allows for better exception management
-                catalog = Catalog.objects.get(
-                    short_name=catalog_name,
-                    version=format_version(catalog_version)
-                )
-                elements = elements.filter(catalog=catalog)
-            return elements
-        except Exception as e:
-            print(e)
+            elements = elements.filter(catalog=catalog)
+        else: 
+            # Two queries isntead of one - can be optimized, but it
+            # allows for better exception management
+            catalog = Catalog.objects.get(
+                short_name=catalog_name,
+                version=format_version(catalog_version)
+            )
+            elements = elements.filter(catalog=catalog)
+        return elements
         
 
 class ElementValidationViewset(viewsets.ModelViewSet):
