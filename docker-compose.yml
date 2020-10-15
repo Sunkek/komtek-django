@@ -7,7 +7,7 @@ services:
     build: komtek-api/.
     command: gunicorn komtek.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/home/app/komtek-api/komtek/staticfiles
+      - static_volume:/home/app/komtek-api/komtek/static
     expose:
       - 8000
     env_file:
@@ -19,7 +19,7 @@ services:
   nginx:
     build: nginx/.
     volumes:
-      - static_volume:/staticfiles
+      - static_volume:/static
     ports:
       - 80:80
     depends_on:
