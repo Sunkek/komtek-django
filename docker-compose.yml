@@ -19,7 +19,7 @@ services:
   nginx:
     build: nginx/.
     volumes:
-      - static_volume:/static
+      - static_volume:/usr/src/app/komtek/komtek/static
     ports:
       - 80:80
     depends_on:
