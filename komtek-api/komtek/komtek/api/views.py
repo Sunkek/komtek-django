@@ -55,7 +55,10 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         catalog_name = self.request.query_params.get("catalog_name")
         catalog_version = self.request.query_params.get("catalog_version")
         if catalog_name and not catalog_version:
-            catalog = Catalog.objects.filter(short_name=catalog_name)
+            catalog = Catalog.objects.filter(
+                short_name=catalog_name,
+                date_started__lte=dt_date.today()
+            )
             catalog = catalog.latest("date_started", "date_created")
             if not catalog:
                 raise Catalog.DoesNotExist(
