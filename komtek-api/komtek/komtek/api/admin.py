@@ -15,14 +15,14 @@ LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 class NumberOfElementsForm(ActionForm):
     number = forms.IntegerField(
         required=True,
-        label="Количество",
+        label="Количество: ",
         initial=10,
     )
+
 
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
     actions = ["populate"]
-    action_form = NumberOfElementsForm
 
     def save_model(self, request, obj, form, change):
         """Overriding Catalog's save model function to format its version"""
@@ -32,9 +32,9 @@ class CatalogAdmin(admin.ModelAdmin):
     def populate(self, request, queryset):
         """Add 10 randomly created elements to the selected catalogs.
         If an element already exists - update its creation date."""
+        form = NumberOfElementsForm(request.POST)
         for catalog in queryset:
-            print(request.POST["number"])
-            for i in range(request.POST["number"]):
+            for i in range(form.cleaned_data["number"]):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
                 element = Element(
                     catalog=catalog,
