@@ -1,6 +1,7 @@
 from random import choice, randint
 from datetime import date as dt_date
 from django.contrib import admin, messages
+from django.db.utils import IntegrityError
 from .models import Catalog, Element
 from .utils import format_version
 
@@ -28,10 +29,8 @@ class CatalogAdmin(admin.ModelAdmin):
                 )
                 try:
                     element.save()
-                except Exception as e:
-                    print(e)
-                    print(type(e))
-                    element = Element.get(
+                except IntegrityError:
+                    element = Element.objects.get(
                         catalog=catalog,
                         code=code,
                         description="Автоматически сгенерированный элемент",
