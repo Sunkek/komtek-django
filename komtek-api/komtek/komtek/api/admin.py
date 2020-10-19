@@ -14,7 +14,7 @@ LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 
 class AmountForm(ActionForm):
     amount = forms.IntegerField(
-        required=True,
+        required=False,
         label="Количество: ",
         initial=10
     )
@@ -35,7 +35,7 @@ class CatalogAdmin(admin.ModelAdmin):
         If an element already exists - update its creation date."""
         print(request.POST["amount"])
         for catalog in queryset:
-            for i in range(int(request.POST["amount"])):
+            for _ in range(int(request.POST.get("amount", 10))):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
                 element = Element(
                     catalog=catalog,
