@@ -12,9 +12,18 @@ from .utils import format_version
 LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 
 
+class AmountForm(ActionForm):
+    amount = forms.IntegerField(
+        required=True,
+        label="Количество: ",
+        initial=10
+    )
+
+
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
     actions = ["populate"]
+    action_form = AmountForm
 
     def save_model(self, request, obj, form, change):
         """Overriding Catalog's save model function to format its version"""
@@ -24,6 +33,7 @@ class CatalogAdmin(admin.ModelAdmin):
     def populate(self, request, queryset):
         """Add 10 randomly created elements to the selected catalogs.
         If an element already exists - update its creation date."""
+        print(request.POST["amount"])
         for catalog in queryset:
             for i in range(10):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
