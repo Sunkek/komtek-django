@@ -1,9 +1,10 @@
 from random import choice, randint
+from datetime import date as dt_date
 from django.contrib import admin, messages
 from .models import Catalog, Element
 from .utils import format_version
 
-LETTERS = list("qwertyuiopasdfghjklzxcvbnm")
+LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
@@ -15,17 +16,28 @@ class CatalogAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def populate(self, request, queryset):
+        """Add 10 randomly created elements to the selected catalogs.
+        If an element already exists - update its creation date."""
         for catalog in queryset:
-            try:
-                for i in range(10):
-                    element = Element(
+            for i in range(10):
+                code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
+                element = Element(
+                    catalog=catalog,
+                    code=code,
+                    description="Автоматически сгенерированный элемент",
+                )
+                try:
+                    element.save()
+                except Exception as e:
+                    print(e)
+                    print(type(e))
+                    element = Element.get(
                         catalog=catalog,
-                        code=f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}",
+                        code=code,
                         description="Автоматически сгенерированный элемент",
                     )
+                    element.date_created = dt_date.today()
                     element.save()
-            except Exception as e:
-                print(e)
         self.message_user(
             request, 
             "Элементы добавлены", 
