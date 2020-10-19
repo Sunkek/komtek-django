@@ -26,7 +26,6 @@ class CatalogAdmin(admin.ModelAdmin):
     def populate(self, request, queryset):
         """Add 10 randomly created elements to the selected catalogs.
         If an element already exists - update its creation date."""
-        print(request.POST["amount"])
         for catalog in queryset:
             for _ in range(int(request.POST.get("amount", 10))):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
