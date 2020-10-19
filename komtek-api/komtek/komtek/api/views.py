@@ -53,6 +53,7 @@ class ElementsByCatalogViewset(viewsets.ModelViewSet):
         """Overriding the default get_queryset for clarity"""
         elements = Element.objects.all().order_by("code")
         catalog_name = self.request.query_params.get("catalog_name", "")
+        catalog_name = catalog_name.replace("%20", " ")
         catalog_version = self.request.query_params.get("catalog_version", "")
         if catalog_name and not catalog_version:
             catalog = Catalog.objects.filter(
