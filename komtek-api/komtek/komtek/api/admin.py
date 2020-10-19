@@ -12,7 +12,7 @@ from .utils import format_version
 LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 
 
-class NumberOfElementsForm(ActionForm):
+class NumberOfElementsForm(forms.Form):
     number = forms.IntegerField(
         required=True,
         label="Количество: ",
