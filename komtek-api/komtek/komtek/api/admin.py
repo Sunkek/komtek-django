@@ -8,16 +8,9 @@ from django.db.utils import IntegrityError
 
 from .models import Catalog, Element
 from .utils import format_version
+from .forms import AmountForm
 
 LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
-
-
-class AmountForm(ActionForm):
-    amount = forms.IntegerField(
-        required=False,
-        label="Количество: ",
-        initial=10
-    )
 
 
 @admin.register(Catalog)
@@ -57,7 +50,7 @@ class CatalogAdmin(admin.ModelAdmin):
             "Элементы добавлены", 
             messages.SUCCESS
         )
-    populate.short_description = "Добавить 10 случайных элементов"
+    populate.short_description = "Добавить N случайных элементов"
 
 
 admin.site.register(Element)
