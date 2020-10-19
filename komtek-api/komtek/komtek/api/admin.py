@@ -35,7 +35,7 @@ class CatalogAdmin(admin.ModelAdmin):
         If an element already exists - update its creation date."""
         print(request.POST["amount"])
         for catalog in queryset:
-            for i in range(request.POST.get("amount", 10)):
+            for i in range(request.POST["amount"]):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
                 element = Element(
                     catalog=catalog,
