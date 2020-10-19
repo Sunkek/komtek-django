@@ -7,6 +7,7 @@ LETTERS = list("qwertyuiopasdfghjklzxcvbnm")
 
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
+    actions = ["populate"]
 
     def save_model(self, request, obj, form, change):
         """Overriding Catalog's save model function to format its version"""
