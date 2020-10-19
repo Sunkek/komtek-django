@@ -33,30 +33,33 @@ class CatalogAdmin(admin.ModelAdmin):
     def populate(self, request, queryset):
         """Add 10 randomly created elements to the selected catalogs.
         If an element already exists - update its creation date."""
-        print(request.POST["amount"])
-        for catalog in queryset:
-            for i in range(request.POST["amount"]):
-                code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
-                element = Element(
-                    catalog=catalog,
-                    code=code,
-                    description="Автоматически сгенерированный элемент",
-                )
-                try:
-                    element.save()
-                except IntegrityError:
-                    element = Element.objects.get(
+        try:
+            print(request.POST["amount"])
+            for catalog in queryset:
+                for i in range(request.POST["amount"]):
+                    code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
+                    element = Element(
                         catalog=catalog,
                         code=code,
                         description="Автоматически сгенерированный элемент",
                     )
-                    element.date_created = dt_date.today()
-                    element.save()
-        self.message_user(
-            request, 
-            "Элементы добавлены", 
-            messages.SUCCESS
-        )
+                    try:
+                        element.save()
+                    except IntegrityError:
+                        element = Element.objects.get(
+                            catalog=catalog,
+                            code=code,
+                            description="Автоматически сгенерированный элемент",
+                        )
+                        element.date_created = dt_date.today()
+                        element.save()
+            self.message_user(
+                request, 
+                "Элементы добавлены", 
+                messages.SUCCESS
+            )
+        except Exception as e:
+            print(e)
     populate.short_description = "Добавить 10 случайных элементов"
 
 
