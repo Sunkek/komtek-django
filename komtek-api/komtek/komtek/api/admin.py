@@ -1,15 +1,28 @@
 from random import choice, randint
 from datetime import date as dt_date
+
 from django.contrib import admin, messages
+from django.contrib.admin.helpers import ActionForm
+from django import forms
 from django.db.utils import IntegrityError
+
 from .models import Catalog, Element
 from .utils import format_version
 
 LETTERS = list("QWERTYUIOPASDFGHJKLZXCVBNM")
 
+
+class NumberOfElementsForm(ActionForm):
+    number = forms.IntegerField(
+        required=True,
+        label="Количество",
+        initial=10,
+    )
+
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
     actions = ["populate"]
+    action_form = NumberOfElementsForm
 
     def save_model(self, request, obj, form, change):
         """Overriding Catalog's save model function to format its version"""
@@ -20,7 +33,8 @@ class CatalogAdmin(admin.ModelAdmin):
         """Add 10 randomly created elements to the selected catalogs.
         If an element already exists - update its creation date."""
         for catalog in queryset:
-            for i in range(10):
+            print(request.POST["number"])
+            for i in range(request.POST["number"]):
                 code = f"{randint(0,9)}{choice(LETTERS)}{choice(LETTERS)}"
                 element = Element(
                     catalog=catalog,
@@ -42,7 +56,7 @@ class CatalogAdmin(admin.ModelAdmin):
             "Элементы добавлены", 
             messages.SUCCESS
         )
-    populate.short_description = "Добавить 10 случайных элементов"
+    populate.short_description = "Добавить N случайных элементов"
 
 
 admin.site.register(Element)
