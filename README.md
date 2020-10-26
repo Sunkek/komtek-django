@@ -12,11 +12,11 @@
 
 Перемещаемся в желаемую директорию и клонируем этот репозиторий: 
 
-`git clone https://github.com/Sunkek/komtek-django`
+`git clone https://github.com/Sunkek/komtek-test-assignment`
 
 ### 2
 
-Входим в репозиторий при помощи `cd komtek-django` и создаём файл с переменными окружения для нашего API: 
+Входим в репозиторий при помощи `cd komtek-test-assignment` и создаём файл с переменными окружения для нашего API: 
 
 `touch komtek-api.env`
 
